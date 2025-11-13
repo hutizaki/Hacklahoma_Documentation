@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # Tailwind CSS Basics
@@ -303,7 +303,6 @@ Try building a simple profile card:
 ## Learn More
 
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) - The official docs are fantastic
-- [Tailwind UI](https://tailwindui.com/) - Pre-built component examples
 - [Tailwind Play](https://play.tailwindcss.com/) - Online playground to experiment
 
 ## Next Up

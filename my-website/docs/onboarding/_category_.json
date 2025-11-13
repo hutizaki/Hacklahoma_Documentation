@@ -1,6 +1,6 @@
 {
   "label": "Onboarding",
-  "position": 2,
+  "position": 0,
   "link": {
     "type": "doc",
     "id": "onboarding/intro"

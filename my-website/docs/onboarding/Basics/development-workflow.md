@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 1
 ---
 
 # Development Workflow
@@ -36,6 +36,8 @@ npm install
 ```
 
 ### 2. Pick a Task
+
+![Github Issues](/img/Github_Issues.png)
 
 Tasks are usually tracked in:
 - **GitHub Issues** - Check the project's Issues tab
