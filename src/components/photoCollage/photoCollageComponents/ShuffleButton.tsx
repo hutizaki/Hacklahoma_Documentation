@@ -7,9 +7,9 @@
 
 import React, { MutableRefObject } from 'react';
 import * as motion from 'motion/react-client';
-import { Card, CardId, CardAnimationMap } from './photoCollageTypes';
-import { executeForwardShuffle, executeBackwardShuffle } from './cardShuffleLogic';
-import { SHUFFLE_DELAY } from './cardConstants';
+import { Card, CardId, CardAnimationMap } from './Card';
+import { executeForwardShuffle, executeBackwardShuffle } from './CardShuffleLogic';
+import configSettings from './Config';
 
 /**
  * Simple SVG arrow component (inline to avoid external asset dependencies)
@@ -27,7 +27,7 @@ const ArrowSvg: React.FC<{ className?: string }> = ({ className }) => (
 
 type Direction = 'left' | 'right';
 
-interface NavigationButtonProps {
+interface ShuffleButtonProps {
   /** Direction of the button */
   direction: Direction;
   /** Whether the entrance animation has completed */
@@ -72,9 +72,9 @@ const DIRECTION_CONFIG = {
 } as const;
 
 /**
- * Navigation button for photo collage
+ * Shuffle button for photo collage
  */
-export const NavigationButton: React.FC<NavigationButtonProps> = ({
+export const ShuffleButton: React.FC<ShuffleButtonProps> = ({
   direction,
   hasCompletedEntrance,
   animationComplete,
@@ -106,7 +106,7 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
     // Execute direction-specific logic
     if (direction === 'left') {
       // Left button: backward shuffle
-      const delay = SHUFFLE_DELAY;
+      const delay = configSettings.SHUFFLE_DELAY;
       setButtonsDisabled(true);
       setTimeout(() => {
         setButtonsDisabled(false);
@@ -122,7 +122,7 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
       setTimeout(() => setCards(shuffleResult.cardsWithNewZIndex), delay / 2);
     } else {
       // Right button: forward shuffle
-      const delay = SHUFFLE_DELAY + 100;
+      const delay = configSettings.SHUFFLE_DELAY + 100;
       setButtonsDisabled(true);
       setTimeout(() => {
         setButtonsDisabled(false);
@@ -133,7 +133,7 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
 
       setCards(shuffleResult.cardsWithOldZIndex);
       setAnimationStates(shuffleResult.animationStates);
-      setTimeout(() => setCards(shuffleResult.cardsWithNewZIndex), SHUFFLE_DELAY);
+      setTimeout(() => setCards(shuffleResult.cardsWithNewZIndex), configSettings.SHUFFLE_DELAY);
       setTimeout(() => {
         if (swapPhotoOnCardID) {
           const updatedCards = swapPhotoOnCardID(shuffleResult.flyingCardId, shuffleResult.cardsWithNewZIndex);

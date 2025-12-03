@@ -26,24 +26,19 @@ import {
   CardId,
   CardAnimationMap,
   AnimationState,
-  getCardLetter,
-} from './photoCollageComponents/photoCollageTypes';
+  getPositionConfig,
+  getCardLetter,    // <---- 🟥🟥🟥🟥🟥 REMOVE THIS LINE WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
+} from './photoCollageComponents/Card';
 
 // Logic and data imports
-import {
-  getPositionConfig,
-} from './photoCollageComponents/cardPositions';
-import { photoCollageCardVariants } from './photoCollageComponents/photoCollageFramerVariants';
-import {
-  initializeCards,
-} from './photoCollageComponents/cardShuffleLogic';
-import { getPhotoData, photoImages } from './photoCollageComponents/photoData';
+import { photoCollageCardVariants } from './photoCollageComponents/CardFramerVariants';
+import { initializeCards, executeForwardShuffle, executeBackwardShuffle } from './photoCollageComponents/CardShuffleLogic';
+import { getPhotoData, photoImages } from './photoCollageComponents/PhotoGallery';
+import configSettings from './photoCollageComponents/Config';
 
 // Component imports
-import { LeftButton } from './photoCollageComponents/LeftButton';
-import { RightButton } from './photoCollageComponents/RightButton';
-import { VintagePostcard } from './photoCollageComponents/VintagePostcard';
-
+import { Postcard } from './photoCollageComponents/Postcard';
+import { ShuffleButton } from './photoCollageComponents/ShuffleButton';
 /**
  * Main Photo Collage Component
  */
@@ -60,15 +55,10 @@ const PhotoCollage: React.FC = () => {
   // Track whether button animations have completed
   const [leftButtonAnimationComplete, setLeftButtonAnimationComplete] = useState(false);
   const [rightButtonAnimationComplete, setRightButtonAnimationComplete] = useState(false);
-  
-  // Track whether buttons are disabled (for click throttling)
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   
   // Use ref for immediate synchronous check (prevents race conditions)
   const isAnimatingRef = useRef(false);
-  
-  // Track which cards are in flying state (to know when swapCenterBack should be called)
-  const flyingCardsRef = useRef<Set<CardId>>(new Set());
   
   // Track animation state for each card
   const [animationStates, setAnimationStates] = useState<CardAnimationMap>({
@@ -79,9 +69,9 @@ const PhotoCollage: React.FC = () => {
     [CardId.CARD_E]: AnimationState.OFFSCREEN,
     [CardId.CARD_F]: AnimationState.OFFSCREEN,
   });
-  
-  // Debug: Toggle fixed image visibility
-  const [showDebugImage, setShowDebugImage] = useState(false);
+
+const touchStartX = useRef<number>(0);
+const touchStartY = useRef<number>(0);
 
   /**
    * Trigger entrance animation when component comes into view
@@ -138,15 +128,108 @@ const PhotoCollage: React.FC = () => {
     return updatedCards;
   };
 
+    /**
+   * Handle touch start event for swipe detection
+   */
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  /**
+   * Handle touch end event for swipe detection
+   * Detects horizontal swipe direction and triggers appropriate shuffle
+   */
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    // Skip if entrance animation hasn't completed or already animating
+    if (!hasCompletedEntrance || isAnimatingRef.current || buttonsDisabled) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const deltaX = touchEndX - touchStartX.current;
+    const deltaY = touchEndY - touchStartY.current;
+
+    // Minimum swipe distance threshold (in pixels)
+    const minSwipeDistance = 50;
+
+    // Check if this is primarily a horizontal swipe
+    // (horizontal distance must be greater than vertical distance)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swipe right - trigger backward shuffle (same as left button)
+        handleBackwardShuffle();
+      } else {
+        // Swipe left - trigger forward shuffle (same as right button)
+        handleForwardShuffle();
+      }
+    }
+  };
+
+  /**
+   * Execute forward shuffle (swipe left or right button click)
+   */
+  const handleForwardShuffle = () => {
+    // Synchronous check using ref (prevents race conditions)
+    if (isAnimatingRef.current || buttonsDisabled) return;
+
+    // Set ref immediately (synchronous) - this blocks all subsequent clicks/swipes
+    isAnimatingRef.current = true;
+
+    const delay = configSettings.SHUFFLE_DELAY + 100;
+    setButtonsDisabled(true);
+    setTimeout(() => {
+      setButtonsDisabled(false);
+      isAnimatingRef.current = false;
+    }, delay);
+
+    const shuffleResult = executeForwardShuffle(cards);
+
+    setCards(shuffleResult.cardsWithOldZIndex);
+    setAnimationStates(shuffleResult.animationStates);
+    setTimeout(() => setCards(shuffleResult.cardsWithNewZIndex), configSettings.SHUFFLE_DELAY);
+    setTimeout(() => {
+      const updatedCards = swapPhotoOnCardID(shuffleResult.flyingCardId, shuffleResult.cardsWithNewZIndex);
+      setCards(updatedCards);
+    }, delay);
+  };
+
+  /**
+   * Execute backward shuffle (swipe right or left button click)
+   */
+  const handleBackwardShuffle = () => {
+    // Synchronous check using ref (prevents race conditions)
+    if (isAnimatingRef.current || buttonsDisabled) return;
+
+    // Set ref immediately (synchronous) - this blocks all subsequent clicks/swipes
+    isAnimatingRef.current = true;
+    
+    const delay = configSettings.SHUFFLE_DELAY;
+    setButtonsDisabled(true);
+    setTimeout(() => {
+      setButtonsDisabled(false);
+      isAnimatingRef.current = false;
+    }, delay);
+
+    // Swap photo BEFORE shuffle logic executes
+    const cardsWithUpdatedPhoto = swapPhotoBackShuffle(cards);
+    const shuffleResult = executeBackwardShuffle(cardsWithUpdatedPhoto);
+
+    setCards(shuffleResult.cardsWithOldZIndex);
+    setAnimationStates(shuffleResult.animationStates);
+    setTimeout(() => setCards(shuffleResult.cardsWithNewZIndex), delay / 2);
+  };
+
   return (
     <>
       {/* Photo collage with navigation arrows */}
-      <div className="photo-collage-parent-container relative w-full z-10 flex items-center justify-center">
+      <div className="photo-collage-parent-container relative w-full z-10 flex items-center justify-center pt-[10rem] md:pt-[5rem]">
           
           {/* Left arrow button - triggers backward shuffle */}
-          <LeftButton
+          <ShuffleButton
+            direction="left"
             hasCompletedEntrance={hasCompletedEntrance}
-            leftButtonAnimationComplete={leftButtonAnimationComplete}
+            animationComplete={leftButtonAnimationComplete}
             onAnimationComplete={() => setLeftButtonAnimationComplete(true)}
             cards={cards}
             buttonsDisabled={buttonsDisabled}
@@ -163,6 +246,8 @@ const PhotoCollage: React.FC = () => {
             onViewportEnter={() => setIsInView(true)}
             onViewportLeave={() => setIsInView(false)}
             viewport={{ amount: 0.8 }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Render all 6 cards based on their current positions */}
             {cards.map((card) => {
@@ -174,7 +259,10 @@ const PhotoCollage: React.FC = () => {
               
               // Calculate stagger delay for initial entrance animation
               // Use max(0, ...) to ensure delay is never negative (for z-index 0)
-              const entranceDelay = Math.max(0, (card.zIndex - 1) * 0.15);
+              let entranceDelay = 0;
+              if (!hasCompletedEntrance) {
+                entranceDelay = Math.max(0, (card.zIndex - 1) * 0.15);
+              }
               
               // Determine which photo to display for this card
               // For now, all cards display their currentPhotoIndex (static photos)
@@ -183,7 +271,7 @@ const PhotoCollage: React.FC = () => {
               const photoData = getPhotoData(photoIndexToDisplay);
               
               // Get the permanent card letter (A-F) for the footer
-              const cardLetter = getCardLetter(card.id);
+              const cardLetter = getCardLetter(card.id); // <---- 🟥🟥🟥🟥🟥 REMOVE THIS LINE WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
               
               return (
                 <motion.div
@@ -217,22 +305,22 @@ const PhotoCollage: React.FC = () => {
                         [CardId.CARD_F]: AnimationState.MOVE_TO_POSITION,
                       });
                     }
-                    
-                    // // Sequence: First check if fly animation completes
-                    // if (definition === AnimationState.FLY_LEFT || definition === AnimationState.FLY_RIGHT) {
-                    //   // Mark this card as having flown (so we know to swap photo when it reaches centerBack)
-                    //   flyingCardsRef.current.add(card.id);
-                    //   // Fly animation completed
-                    //   setCards(swapPhotoOnCardID(card.id, cards));
-                    //   flyingCardsRef.current.delete(card.id);
-                    // }
+
+                    // Reset MOVE_TO_POSITION animations to MOVE_TO_POSITION after completion
+                    // This ensures the next fly animation will trigger (state change detection)
+                    if (definition === AnimationState.FLY_LEFT || definition === AnimationState.FLY_RIGHT) {
+                      setAnimationStates(prevStates => ({
+                        ...prevStates,
+                        [card.id]: AnimationState.MOVE_TO_POSITION,
+                      }));
+                    }
                   }}
                 >
-                  <VintagePostcard
+                  <Postcard
                     imageUrl={photoData.path}
                     title={photoData.title}
-                    footer={`CARD ${cardLetter}`}
-                    demoNumber={photoData.demoNumber}
+                    footer={`CARD ${cardLetter}`}     // <---- 🟥🟥🟥🟥🟥 Change to {photoData.footer} 🟥🟥🟥🟥🟥
+                    demoNumber={photoData.demoNumber} // <---- 🟥🟥🟥🟥🟥 REMOVE THIS WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
                   />
                 </motion.div>
               );
@@ -240,9 +328,10 @@ const PhotoCollage: React.FC = () => {
           </motion.div>
 
           {/* Right arrow button - triggers forward shuffle */}
-          <RightButton
+          <ShuffleButton
+            direction="right"
             hasCompletedEntrance={hasCompletedEntrance}
-            rightButtonAnimationComplete={rightButtonAnimationComplete}
+            animationComplete={rightButtonAnimationComplete}
             onAnimationComplete={() => setRightButtonAnimationComplete(true)}
             cards={cards}
             buttonsDisabled={buttonsDisabled}

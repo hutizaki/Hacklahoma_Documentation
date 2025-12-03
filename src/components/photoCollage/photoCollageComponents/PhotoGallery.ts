@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { VintagePostcard } from './VintagePostcard';
+import { Postcard } from './Postcard';
 
 /**
  * Photo data interface
@@ -21,6 +21,8 @@ export interface PhotoData {
   title: string;
   /** Footer text for the photo */
   footer: string;
+
+  demoNumber?: number; // <---- 🟥🟥🟥🟥🟥 REMOVE THIS WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
 }
 
 /**
@@ -93,7 +95,7 @@ export const getPhotoData = (index: number): PhotoData & { demoNumber?: number }
   if (index < photoImages.length) {
     return {
       ...photoImages[index],
-      demoNumber: index + 1,
+      demoNumber: index + 1, // <---- 🟥🟥🟥🟥🟥 REMOVE THIS LINE WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
     };
   }
 
@@ -101,26 +103,6 @@ export const getPhotoData = (index: number): PhotoData & { demoNumber?: number }
   return {
     title: `Photo #${index + 1}, Norman, Okla.`,
     footer: `DEMO-${String(index + 1).padStart(3, '0')}`,
-    demoNumber: index + 1,
+    demoNumber: index + 1, // <---- 🟥🟥🟥🟥🟥 REMOVE THIS LINE WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
   };
-};
-
-/**
- * Create a vintage postcard element for a specific card
- * Applies vintage styling with border, title, and footer text
- * Always uses demo mode with numbered placeholders
- * 
- * @param index - Card index (0-5+)
- * @param className - Optional additional CSS classes
- * @returns React element with vintage postcard styling
- */
-export const createVintagePostcard = (index: number, className?: string): React.ReactElement => {
-  const data = getPhotoData(index);
-  return React.createElement(VintagePostcard, {
-    imageUrl: data.path,
-    title: data.title,
-    footer: data.footer,
-    className,
-    demoNumber: data.demoNumber,
-  });
 };

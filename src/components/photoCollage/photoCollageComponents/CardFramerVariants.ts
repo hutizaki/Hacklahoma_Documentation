@@ -17,8 +17,8 @@
 */
 
 import type { Variants } from 'motion/react';
-import { PositionConfig } from './photoCollageTypes';
-import { SCALE_VALUE, OFF_SCREEN_DISTANCE, FLY_DISTANCE } from './cardConstants';
+import { PositionConfig } from './Card';
+import configSettings from './Config';
 
 /**
  * Custom properties passed to variants for dynamic animation calculations.
@@ -47,7 +47,7 @@ export const photoCollageCardVariants: Variants = {
     translateX: '-50%',
     translateY: '-50%',
     opacity: 1,
-    scale: SCALE_VALUE,
+    scale: configSettings.SCALE_VALUE,
     transition: {
       type: 'spring',
       bounce: 0.2,
@@ -59,7 +59,7 @@ export const photoCollageCardVariants: Variants = {
   }),
 
   flyLeft: (config: VariantCustomProps) => ({
-    x: [0, `-${FLY_DISTANCE}`, 0],
+    x: [0, `-${configSettings.FLY_DISTANCE}`, 0],
     y: 0,
     top: config.top,
     left: config.left,
@@ -67,7 +67,7 @@ export const photoCollageCardVariants: Variants = {
     translateX: '-50%',
     translateY: '-50%',
     opacity: 1,
-    scale: SCALE_VALUE,
+    scale: configSettings.SCALE_VALUE,
     transition: {
       type: 'tween',
       duration: 0.6,
@@ -78,7 +78,7 @@ export const photoCollageCardVariants: Variants = {
   }),
 
   flyRight: (config: VariantCustomProps) => ({
-    x: [0, FLY_DISTANCE, 0],
+    x: [0, configSettings.FLY_DISTANCE, 0],
     y: 0,
     top: config.top,
     left: config.left,
@@ -86,7 +86,7 @@ export const photoCollageCardVariants: Variants = {
     translateX: '-50%',
     translateY: '-50%',
     opacity: 1,
-    scale: SCALE_VALUE,
+    scale: configSettings.SCALE_VALUE,
     transition: {
       type: 'tween',
       duration: 0.6,
@@ -105,7 +105,7 @@ export const photoCollageCardVariants: Variants = {
     translateX: '-50%',
     translateY: '-50%',
     opacity: 0,
-    scale: SCALE_VALUE,
+    scale: configSettings.SCALE_VALUE,
   }),
 
   onscreen: (config: VariantCustomProps) => ({
@@ -117,7 +117,7 @@ export const photoCollageCardVariants: Variants = {
     translateX: '-50%',
     translateY: '-50%',
     opacity: 1,
-    scale: SCALE_VALUE,
+    scale: configSettings.SCALE_VALUE,
     transition: {
       type: 'spring',
       bounce: 0.3,

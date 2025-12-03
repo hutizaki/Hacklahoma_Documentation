@@ -1,5 +1,5 @@
 /**
- * Vintage Postcard Component
+ * Postcard Component
  *
  * Renders a photo with vintage postcard styling including:
  * - Teal border around the image
@@ -10,33 +10,31 @@
  */
 
 import React from 'react';
+import configSettings from './Config';
 
-interface VintagePostcardProps {
+interface PostcardProps {
   /** URL/path to the image (optional in demo mode) */
   imageUrl?: string;
   /** Title text displayed above the image */
   title: string;
   /** Footer text displayed below the image (bottom right) */
   footer: string;
-  /** Optional className for additional styling */
-  className?: string;
   /** Demo mode: display a number instead of an image */
-  demoNumber?: number;
+  demoNumber?: number; // <---- 🟥🟥🟥🟥🟥 REMOVE THIS WHEN IMAGES ARE ADDED 🟥🟥🟥🟥🟥
 }
 
 /**
- * Vintage Postcard Component
+ * Postcard Component
  * Creates a styled postcard with border and text overlays
  */
-export const VintagePostcard: React.FC<VintagePostcardProps> = ({
+export const Postcard: React.FC<PostcardProps> = ({
   imageUrl,
   title,
   footer,
-  className = '',
   demoNumber,
 }) => {
   return (
-    <div className={`bg-[#f4ece1] px-6 shadow-2xl ${className}`}>
+    <div className="px-6 shadow-2xl" style={{ backgroundColor: configSettings.FRAMED_CARD_BG }}>
       {/* Top text */}
       <div className="text-right pr-6 pt-2">
         <p
@@ -54,9 +52,11 @@ export const VintagePostcard: React.FC<VintagePostcardProps> = ({
 
       {/* Image or Demo Number */}
       <div className="digital-photo">
+        {/* DELETE BELOW */}
+
         {demoNumber !== undefined ? (
           <div
-            className="w-full h-auto flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100"
+            className="w-full h-auto flex items-center justify-center bg-gradient-to-br from-blue-200 to-purple-200"
             style={{ aspectRatio: '8/5' }}
           >
             <span className="text-8xl font-bold text-gray-700 select-none">
@@ -64,22 +64,26 @@ export const VintagePostcard: React.FC<VintagePostcardProps> = ({
             </span>
           </div>
         ) : (
+          
+          // DELETE ABOVE
           <img
             src={imageUrl}
             alt={title}
             className="w-full h-auto block"
             style={{ aspectRatio: '8/5', objectFit: 'fill' }}
           />
+
         )}
       </div>
 
       {/* Bottom text */}
-      <div className="text-right pb-[0.25rem] pr-2">
+      <div className="text-right pr-2">
         <p
           className="text-gray-600 text-xs tracking-widest"
           style={{
             fontFamily: 'Courier New, monospace',
-            fontSize: '11px'
+            fontSize: '11px',
+            paddingBottom: '0.25rem'
           }}
         >
           {footer}
@@ -88,4 +92,3 @@ export const VintagePostcard: React.FC<VintagePostcardProps> = ({
     </div>
   );
 };
-
