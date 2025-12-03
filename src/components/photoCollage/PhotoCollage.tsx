@@ -223,7 +223,7 @@ const touchStartY = useRef<number>(0);
   return (
     <>
       {/* Photo collage with navigation arrows */}
-      <div className="photo-collage-parent-container relative w-full z-10 flex items-center justify-center pt-[10rem] md:pt-[5rem]">
+      <div className="photo-collage-parent-container relative w-full z-10 flex items-center justify-center">
           
           {/* Left arrow button - triggers backward shuffle */}
           <ShuffleButton
