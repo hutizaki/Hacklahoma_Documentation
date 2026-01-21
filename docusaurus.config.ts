@@ -18,7 +18,7 @@ const config: Config = {
   url: 'https://hutizaki.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/documentation-starter-kit/',
+  baseUrl: '/Hacklahoma-Documentation/',
 
   // Static directories to serve
   staticDirectories: ['static'],
@@ -26,7 +26,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'hutizaki', // Usually your GitHub org/user name.
-  projectName: 'documentation-starter-kit', // Usually your repo name.
+  projectName: 'Hacklahoma-Documentation', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
@@ -141,7 +141,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Hacklahoma. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.oneLight,
