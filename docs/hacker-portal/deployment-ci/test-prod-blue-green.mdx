@@ -1,0 +1,14 @@
+---
+title: TEST_PROD and Blue-Green
+sidebar_position: 2
+---
+
+# TEST_PROD and Blue-Green
+
+The pipeline updates **TEST_PROD** (testing stack) via the **deploy:test_prod** job: pull frontend and backend by digest, start new color, health-check, switch proxy, stop old color. One deployment at a time (resource_group).
+
+**Live production** (e.g. register.hacklahoma.org) is **not** updated by CI; it is updated on the server (pull, rebuild, restart) or by your own deploy process. TEST_PROD is for validation and staging; production is a separate step.
+
+---
+
+**Related:** [CI pipeline](/docs/hacker-portal/deployment-ci/ci-pipeline), [Blue-green deploy](/docs/hacker-portal/docker/blue-green)

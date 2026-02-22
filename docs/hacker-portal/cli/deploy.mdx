@@ -1,0 +1,14 @@
+---
+title: Deploy
+sidebar_position: 2
+---
+
+# CLI Deploy
+
+**Deployment → Deploy Environment** — Choose Development, Mock Production, or Production. The CLI validates config, shows the plan, builds images, stops existing containers (with cleanup), starts the stack, and checks health.
+
+Each environment uses a **distinct Compose project name** (e.g. `hackportal_dev_lan_https`, `hackportal_prod`) so `down` only affects that environment, not the pipeline's testing stack.
+
+---
+
+**Related:** [Docker — Development](/docs/hacker-portal/docker/development), [Production server](/docs/hacker-portal/deployment-ci/production-server)

@@ -39,3 +39,28 @@
 [data-theme='light'] {
   --ifm-background-color: #fff;
 }
+
+
+/* Max page width on Docs pages only (ThemeClassNames.wrapper.main + docs.docSidebarContainer)
+.main-wrapper:has(.theme-doc-sidebar-container) {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+} */
+
+
+/* Doc article content: narrow reading width (ThemeClassNames.docs.docMarkdown) */
+.theme-doc-markdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 625px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* PhotoCollage demo on docs page only: shrink only the cards (not the arrows) */
+.photo-collage-docs-demo .photo-collage-container {
+  transform: scale(0.75);
+  transform-origin: center center;
+}

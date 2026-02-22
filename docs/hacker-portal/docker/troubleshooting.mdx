@@ -1,0 +1,17 @@
+---
+title: Docker Troubleshooting
+sidebar_position: 4
+---
+
+# Docker Troubleshooting
+
+- **ContainerConfig error** — Remove the affected containers (`docker rm -f <name>`), then run `docker compose ... up -d` again.
+- **Port conflicts** — Ensure the testing stack uses 9080/9081 (`.env.ci`); dev uses 5173/5001. Stop the other stack or change ports.
+- **Bind mount on Windows CI** — Don't bind-mount nginx config files into containers; use env-driven config or inject via `docker exec`.
+- **Backend 500 on /health or /api/csrf-token** — Often cookie domain on single-label hostnames (e.g. `frontend_blue`). Backend should omit `domain` for such hosts.
+
+Full write-ups and related files are in the hacker-portal repo: `docs/deployment/challenges-and-solutions.md`, `cli/docs/docker-project-names-and-pipeline-isolation.md`.
+
+---
+
+**Related:** [Blue-green deploy](/docs/hacker-portal/docker/blue-green), [CSRF and CORS](/docs/hacker-portal/security/csrf-cors)

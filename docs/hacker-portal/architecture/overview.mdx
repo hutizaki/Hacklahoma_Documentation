@@ -1,0 +1,16 @@
+---
+title: Architecture Overview
+sidebar_position: 0
+---
+
+# Architecture Overview
+
+HackPortal is a full-stack app: **React** frontend, **Express** backend, **MongoDB**. Docker for dev and production; pnpm monorepo (frontend, backend, cli). CI builds images, runs tests, and deploys to TEST_PROD with blue-green.
+
+Data flow: Browser → nginx (prod) or Vite dev server → frontend; API calls → nginx or direct → backend → MongoDB. Auth via JWT in httpOnly cookies; CSRF and CORS enforced.
+
+Component layout and diagram: `docs/architecture/README.md` in the repo.
+
+---
+
+**Related:** [Introduction](/docs/hacker-portal/), [Decisions (ADRs)](/docs/hacker-portal/architecture/decisions)

@@ -1,0 +1,18 @@
+---
+title: API Overview
+sidebar_position: 1
+---
+
+# API Overview
+
+REST API under **`/api`**. Main groups:
+
+- **Auth** — `/api/auth/register`, `/api/auth/login`, `/api/auth/logout`, `/api/auth/me`.
+- **Users** — Profile, theme, name (with permission checks).
+- **Admin** (dev) — User/role/permission management, feature flags, sessions, activity.
+
+Health: **GET /health** (no prefix). Full endpoint list and request/response shapes are in the hacker-portal repo: `docs/architecture/api-endpoints.md`.
+
+---
+
+**Related:** [Backend overview](/docs/hacker-portal/backend/overview), [Authentication](/docs/hacker-portal/security/authentication)

@@ -1,0 +1,20 @@
+---
+title: Blue-Green Deploy
+sidebar_position: 3
+---
+
+# Blue-Green Deploy
+
+The **deploy:test_prod** CI job updates TEST_PROD with a blue-green rollout:
+
+1. Pull frontend and backend images by **digest** (from the publish stage).
+2. Build the proxy image and start the **new** color (e.g. backend_blue, frontend_blue).
+3. Wait for health checks (`/health`, `/api/csrf-token`) on the new color.
+4. Switch the proxy to the new color (nginx config updated via `docker exec` + reload).
+5. Stop the **old** color (e.g. backend_green, frontend_green).
+
+**No host-path bind mounts** — On Windows CI, binding repo files into containers can fail ("mount directory onto file"). The frontend uses env-driven nginx config (`NGINX_BACKEND_UPSTREAM`); the proxy image is baked and config is injected with `docker exec`.
+
+---
+
+**Related:** [Docker overview](/docs/hacker-portal/docker/overview), [Troubleshooting](/docs/hacker-portal/docker/troubleshooting)

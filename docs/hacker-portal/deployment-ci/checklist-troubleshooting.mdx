@@ -1,0 +1,16 @@
+---
+title: Checklist and Troubleshooting
+sidebar_position: 3
+---
+
+# Checklist and Troubleshooting
+
+**Pre-deploy:** Env set (MongoDB, JWT, COOKIE_DOMAIN, CORS_ORIGIN, VITE_API_BASE_URL); backend and frontend build; health endpoints work; SSL and nginx configured on the server.
+
+**Common issues:** ContainerConfig after config change → remove containers and recreate. Port conflict → ensure testing stack uses 9080/9081. Health check fails in CI → run health checks from a container on the compose network, not from the job container. Backend 500 on /health or /api/csrf-token → check cookie domain for single-label hostnames.
+
+Full checklist: `docs/deployment/checklist.md`. Challenges and fixes: `docs/deployment/challenges-and-solutions.md` in the repo.
+
+---
+
+**Related:** [Docker — Troubleshooting](/docs/hacker-portal/docker/troubleshooting), [Production server](/docs/hacker-portal/deployment-ci/production-server)

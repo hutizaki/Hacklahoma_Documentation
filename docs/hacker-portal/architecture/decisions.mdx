@@ -1,0 +1,17 @@
+---
+title: Decisions (ADRs)
+sidebar_position: 1
+---
+
+# Architecture Decisions
+
+Short list of key decisions (full ADRs in repo `docs/architecture/decisions.md`):
+
+- **Explicit Docker Compose project names** — CLI and pipeline use different project names so they don't tear down each other's containers.
+- **Testing stack on 9080/9081** — CI uses these ports so the testing stack doesn't conflict with dev (5173/5001) or prod (80/5001).
+- **No host-path bind mounts for CI deploy** — On Windows CI, bind-mounting nginx config fails; use env-driven config and inject via `docker exec`.
+- **Cookie domain omitted for single-label hostnames** — Avoid 500s when Host is e.g. `frontend_blue`; backend omits the cookie `domain` attribute in that case.
+
+---
+
+**Related:** [Architecture overview](/docs/hacker-portal/architecture/overview), [Docker — Blue-green](/docs/hacker-portal/docker/blue-green)

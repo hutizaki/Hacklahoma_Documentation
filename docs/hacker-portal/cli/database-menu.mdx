@@ -1,0 +1,18 @@
+---
+title: Database Menu
+sidebar_position: 3
+---
+
+# CLI Database Menu
+
+- **Handle Backups** — Create backup, restore backup, **restore into testing stack** (TEST_PROD), list backups. Restore into testing is blue-green aware (uses the running backend for migration/seed).
+- **Handle Migrations** — Check status, run migrations, rollback; migrate from Mock-Prod to Prod when applicable.
+- **Seed Data** — Run seed scripts (e.g. test users).
+- **Assign Roles** — Assign or remove admin/staff roles.
+- **Database Reset** — Destructive reset with confirmation.
+
+See `cli/docs/database-backups-restore.md` and `cli/docs/INDEX.md` in the repo.
+
+---
+
+**Related:** [Backups and restore](/docs/hacker-portal/database/backups-restore), [CLI overview](/docs/hacker-portal/cli/overview)

@@ -1,0 +1,22 @@
+---
+title: Environment and Config
+sidebar_position: 2
+---
+
+# Environment and Config
+
+Key variables (see `config/README.md` and `config/.env.example` in the repo):
+
+- **PORT** — Backend port (default 5001).
+- **MONGODB_URI_LOCAL** / **MONGODB_URI_PROD** — MongoDB connection string.
+- **JWT_SECRET**, **JWT_EXPIRES_IN** — JWT signing and expiry.
+- **COOKIE_NAME**, **COOKIE_DOMAIN** — Session cookie.
+- **CORS_ORIGIN** — Allowed frontend origin (exact match).
+- **VITE_API_BASE_URL** — Baked into frontend build; must match backend API base.
+- **NODE_ENV** — `development` or `production`.
+
+Env files: `config/.env.dev`, `config/.env.prod` (gitignored), `config/.env.ci` (CI only).
+
+---
+
+**Related:** [Secrets and env](/docs/hacker-portal/security/secrets-env), [Backend overview](/docs/hacker-portal/backend/overview)

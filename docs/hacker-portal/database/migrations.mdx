@@ -1,0 +1,14 @@
+---
+title: Migrations
+sidebar_position: 2
+---
+
+# Migrations
+
+- **Optional fields** — New optional fields with defaults don't require a migration; Mongoose handles them.
+- **password → passwordHash** — Legacy users may have a `password` field; the script `migrate-password-to-password-hash.js` normalizes them. Run it **after** restoring a backup (e.g. into TEST_PROD) so logins work.
+- **When to run** — After any restore from a backup that might contain old schema data; CI does this for the E2E baseline.
+
+---
+
+**Related:** [Backups and restore](/docs/hacker-portal/database/backups-restore), [Models and schema](/docs/hacker-portal/database/models-schema)

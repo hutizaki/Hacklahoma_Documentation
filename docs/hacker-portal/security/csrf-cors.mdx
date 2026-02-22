@@ -1,0 +1,16 @@
+---
+title: CSRF and CORS
+sidebar_position: 3
+---
+
+# CSRF and CORS
+
+**CSRF:** State-changing requests require a valid CSRF token (e.g. from `/api/csrf-token`). The backend rejects requests without a valid token or origin check. In development, `CSRF_DEV_ORIGINS` can allow extra origins (e.g. LAN IP) for testing.
+
+**Cookie domain:** For single-label hostnames (e.g. `frontend_blue` in Docker), the backend **omits** the cookie `domain` attribute so the cookie is set correctly. Setting `domain: "frontend_blue"` caused 500s on `/health` and `/api/csrf-token` in blue-green CI.
+
+**CORS:** `CORS_ORIGIN` must match the frontend URL exactly (e.g. `https://register.hacklahoma.org`). Mismatches cause browser blocking.
+
+---
+
+**Related:** [Security overview](/docs/hacker-portal/security/overview), [Docker — Blue-green](/docs/hacker-portal/docker/blue-green)

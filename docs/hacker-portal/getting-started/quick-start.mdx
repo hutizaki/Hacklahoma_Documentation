@@ -1,0 +1,51 @@
+---
+title: Quick Start
+sidebar_position: 0
+---
+
+# Quick Start
+
+Get from zero to a running HackPortal in four steps.
+
+## 1. Clone and enter the repo
+
+```bash
+git clone <repository-url>
+cd hacker-portal
+```
+
+## 2. Install Node and pnpm
+
+Run the installer for your OS from the **project root** (PowerShell on Windows, Bash on Mac/Linux):
+
+**Windows (PowerShell):**
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+.\scripts\INSTALL_NODE.ps1
+```
+
+**Mac/Linux:**
+
+```bash
+chmod +x scripts/INSTALL_NODE.sh
+./scripts/INSTALL_NODE.sh
+```
+
+Close and reopen your terminal so `pnpm` is on your PATH.
+
+## 3. Install dependencies and start the CLI
+
+```bash
+pnpm install && pnpm -C cli build && pnpm -C cli start
+```
+
+## 4. Configure and run
+
+In the CLI menu: **Setup → Quick Easy Setup** → choose **Development**. When prompted, run the setup script (e.g. `./scripts/setup-dev.sh` or the Windows equivalent), or use **Deployment → Deploy Environment → Development** to start the stack.
+
+**Access:** Frontend at http://localhost:5173, backend at http://localhost:5001/api.
+
+---
+
+**Related:** [Path to production](/docs/hacker-portal/getting-started/path-to-production), [Docker — Development](/docs/hacker-portal/docker/development)

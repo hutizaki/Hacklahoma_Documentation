@@ -1,0 +1,17 @@
+---
+title: Backend Scripts
+sidebar_position: 3
+---
+
+# Backend Scripts
+
+Utility scripts in `backend/src/scripts/`:
+
+- **migrate-password-to-password-hash.js** — Normalizes legacy `password` field to `passwordHash`; run after restoring a backup (e.g. TEST_PROD). CI and CLI restore flow run it when needed.
+- **seed-test-users.js** — Creates/updates test users (e.g. `test@gmail.com`) for E2E and local testing.
+
+Run via `node src/scripts/<name>.js` inside the backend container or with the correct env (e.g. `MONGODB_URI_LOCAL`).
+
+---
+
+**Related:** [Database — Migrations](/docs/hacker-portal/database/migrations), [Backend overview](/docs/hacker-portal/backend/overview)

@@ -1,0 +1,22 @@
+---
+title: CI Pipeline
+sidebar_position: 1
+---
+
+# CI Pipeline
+
+GitLab CI runs on merge requests and push to `main`. **Stages:**
+
+1. **format** — No npm lockfiles (pnpm only); Prettier on changed files.
+2. **lint** — ESLint and TypeScript on frontend and backend.
+3. **build** — Build frontend and backend Docker images; push to GitLab Container Registry with tag `sha-<commit>`.
+4. **test_unit** — Jest (and Vitest) in parallel; backend uses in-container MongoDB, `--runInBand` to avoid duplicate-key issues.
+5. **test_e2e** — Ephemeral burner stack from built images; Puppeteer/Jest E2E; then teardown.
+6. **publish** — After tests pass, write image digests to artifacts.
+7. **deploy** — **deploy:test_prod** pulls by digest and runs blue-green rollout for TEST_PROD.
+
+Config: `config/.env.ci` (ports 9080/9081, no real secrets). Full story: `docs/ci-pipeline.md`, `docs/deployment/docker-stack-isolation-and-ci-testing.md` in the repo.
+
+---
+
+**Related:** [Blue-green deploy](/docs/hacker-portal/docker/blue-green), [TEST_PROD and blue-green](/docs/hacker-portal/deployment-ci/test-prod-blue-green)

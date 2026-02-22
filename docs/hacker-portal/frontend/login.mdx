@@ -1,0 +1,16 @@
+---
+title: Login and Logout
+sidebar_position: 3
+---
+
+# Login and Logout
+
+**Login:** `/login` — User submits email and password. Backend validates, issues a JWT, sets an httpOnly cookie, and returns user data. The app redirects to dashboard or the intended page.
+
+**Logout:** User triggers logout; frontend calls `POST /api/auth/logout`; cookie is cleared and session invalidated.
+
+Cookies are sent automatically with requests (`withCredentials`); protected routes redirect to login when unauthenticated.
+
+---
+
+**Related:** [Authentication](/docs/hacker-portal/security/authentication), [Dashboard](/docs/hacker-portal/frontend/user-dashboard)

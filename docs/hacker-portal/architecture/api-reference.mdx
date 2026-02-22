@@ -1,0 +1,19 @@
+---
+title: API Reference
+sidebar_position: 3
+---
+
+# API Reference
+
+Condensed reference; full detail in the repo.
+
+**Auth:** POST `/api/auth/register`, `/api/auth/login`, `/api/auth/logout`; GET `/api/auth/me`.  
+**Health:** GET `/health`.  
+**Users:** Profile, theme, name (permission-gated).  
+**Admin (dev):** User/role/permission CRUD, feature flags, sessions, activity.
+
+Request/response shapes, status codes, and auth requirements: `docs/architecture/api-endpoints.md` in the hacker-portal repo.
+
+---
+
+**Related:** [Backend — API overview](/docs/hacker-portal/backend/api-overview), [Authentication](/docs/hacker-portal/security/authentication)

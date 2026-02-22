@@ -1,0 +1,16 @@
+---
+title: Production and Testing Stacks
+sidebar_position: 2
+---
+
+# Production and Testing Stacks
+
+**Production:** Uses prod Compose (e.g. `docker-compose.prod.yml` or dev compose with `config/.env.prod`). Containers are named by project (e.g. `hackportal_prod`).
+
+**Testing stack (TEST_PROD):** Used by CI and optional local validation. Project name **`testing_hackportal`**; containers like `testing_hackportal-backend-prod`, `testing_hackportal-frontend-prod`. **Ports 9080 (frontend) and 9081 (backend)** in `config/.env.ci` so the stack doesn't use 80/5001 and doesn't conflict with dev or prod.
+
+The CLI never runs `down` on `testing_hackportal`; the pipeline only runs `up` (no `down`), so the two stay isolated.
+
+---
+
+**Related:** [Docker overview](/docs/hacker-portal/docker/overview), [CI pipeline](/docs/hacker-portal/deployment-ci/ci-pipeline)

@@ -1,0 +1,19 @@
+---
+title: Staff Overview
+sidebar_position: 0
+---
+
+# Staff Dashboard Overview
+
+**Route:** `/staff`. Accessible to users with **staff**, **admin**, or **dev** roles (hierarchical). Layout is **StaffLayout** with nested routes.
+
+**Sub-routes:**
+- `/staff/registration` — Registration management (StaffDashboardContent).
+- `/staff/events` — Event dashboard (StaffEventDashboard).
+- `/staff/tasks` — Staff tasks (StaffTasksPage).
+
+Nav link to Staff is shown only when the user has the required role. Backend enforces the same roles on API endpoints.
+
+---
+
+**Related:** [Staff Registration](/docs/hacker-portal/frontend/staff/registration), [Scan flow](/docs/hacker-portal/frontend/staff/scan-flow)

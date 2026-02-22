@@ -1,0 +1,20 @@
+---
+title: Docker Overview
+sidebar_position: 0
+---
+
+# Docker Overview
+
+Docker gives dev/prod parity and powers CI and production deploys.
+
+- **Development** — `docker-compose.dev.yml` + `config/.env.dev`; MongoDB, backend, frontend, Mongo Express; hot reload.
+- **Production** — `docker-compose.prod.yml` (or dev compose with prod env) + `config/.env.prod`.
+- **Mock production** — `docker-compose.mock-prod.yml` for integration testing.
+- **CI / testing stack** — Override uses project name `testing_hackportal`, ports 9080/9081 so it doesn't conflict with local dev.
+- **Blue-green** — Pipeline deploys TEST_PROD by pulling images by digest, starting the new color, health-checking, then switching the proxy.
+
+Each environment uses its own Compose project name so the CLI and pipeline don't tear down each other's containers.
+
+---
+
+**Related:** [Development](/docs/hacker-portal/docker/development), [Blue-green deploy](/docs/hacker-portal/docker/blue-green)

@@ -1,0 +1,21 @@
+---
+title: Security Overview
+sidebar_position: 0
+---
+
+# Security Overview
+
+HackPortal uses standard production patterns for auth and request safety.
+
+- **Authentication** — JWT in httpOnly cookies; register, login, logout, and `/auth/me` for session.
+- **Authorization** — Role-based access (RBAC) with permissions; hierarchical roles (dev > admin > staff).
+- **CSRF** — Token-based protection for state-changing requests; cookie domain handled for single-label hostnames.
+- **CORS** — `CORS_ORIGIN` must match the frontend URL exactly.
+- **Rate limiting** — Applied on API endpoints.
+- **Security headers** — Helmet.js (e.g. X-Frame-Options, HSTS in production).
+
+Secrets (JWT, CSRF, DB) live in env files only; `.env.prod` is gitignored.
+
+---
+
+**Related:** [Authentication](/docs/hacker-portal/security/authentication), [CSRF and CORS](/docs/hacker-portal/security/csrf-cors), [Secrets and env](/docs/hacker-portal/security/secrets-env)

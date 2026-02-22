@@ -1,0 +1,16 @@
+---
+title: Production Server
+sidebar_position: 0
+---
+
+# Production Server
+
+**First-time:** Install Docker and Docker Compose, nginx, SSL (e.g. Let's Encrypt). Free ports 80/443 (stop Apache if needed). Configure nginx to proxy to the frontend and backend containers. Create `config/.env.prod` with production values. Build and start: `docker compose -f docker-compose.dev.yml --env-file config/.env.prod build && up -d` (or the prod compose file your project uses).
+
+**Updates:** SSH to server, `git pull origin main`, rebuild images, restart: `docker compose ... down && build && up -d`. Or use the CLI (**Deployment → Deploy Environment → Production**) if run from the server or a machine that can reach it.
+
+Details: `PRODUCTION_DEPLOYMENT.md`, `docs/deployment/production.md`, `docs/deployment/redeploy-instructions.md` in the repo.
+
+---
+
+**Related:** [CI pipeline](/docs/hacker-portal/deployment-ci/ci-pipeline), [Path to production](/docs/hacker-portal/getting-started/path-to-production)

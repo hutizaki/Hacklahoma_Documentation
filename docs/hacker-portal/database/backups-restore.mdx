@@ -1,0 +1,16 @@
+---
+title: Backups and Restore
+sidebar_position: 3
+---
+
+# Backups and Restore
+
+- **Create backup** — CLI: **Database → Handle Backups → Create Backup** (or `mongodump` against the running Mongo). Backups go to the `backups/` directory.
+- **Restore into an environment** — **Restore Backup** picks a backup and restores into the selected stack's Mongo.
+- **Restore into TEST_PROD** — **Restore into testing stack** restores into `testing_hackportal-mongo-prod`. The CLI detects the running backend (prod or blue/green) and runs the password migration and optional seed there. Works with both legacy and blue-green TEST_PROD.
+
+Always ensure the target stack is up before restoring; the CLI will prompt you to start it if the Mongo container isn't running.
+
+---
+
+**Related:** [Migrations](/docs/hacker-portal/database/migrations), [CLI — Database menu](/docs/hacker-portal/cli/database-menu)

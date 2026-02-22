@@ -1,0 +1,18 @@
+---
+title: Development
+sidebar_position: 1
+---
+
+# Docker — Development
+
+Local dev uses **docker-compose.dev.yml** and **config/.env.dev**.
+
+**Services:** MongoDB (27017), backend (5001), frontend (5173), Mongo Express (8081). Frontend and backend use hot reload (Vite HMR, ts-node-dev).
+
+**Start:** `docker compose -f docker-compose.dev.yml --env-file config/.env.dev up -d` or use the CLI: **Deployment → Deploy Environment → Development**.
+
+**Project name:** The CLI uses explicit project names (e.g. `hackportal_dev_lan_https`) so `down` only stops that environment, not the pipeline's testing stack.
+
+---
+
+**Related:** [Quick start](/docs/hacker-portal/getting-started/quick-start), [Production and testing stacks](/docs/hacker-portal/docker/production-testing-stacks)

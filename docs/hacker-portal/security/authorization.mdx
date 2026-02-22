@@ -1,0 +1,18 @@
+---
+title: Authorization
+sidebar_position: 2
+---
+
+# Authorization
+
+Access is controlled by **roles and permissions**.
+
+- **Roles** — e.g. dev, admin, staff, hacker; can be grouped and mutually exclusive.
+- **Permissions** — Fine-grained (resource + action); checked via `user.hasPermission(resource, action)`.
+- **Hierarchy** — dev > admin > staff: higher roles inherit access of lower ones (e.g. staff dashboard visible to admin and dev).
+
+Protected routes and API endpoints verify the user's role or permissions; missing permission returns **403 Forbidden**.
+
+---
+
+**Related:** [Authentication](/docs/hacker-portal/security/authentication), [Staff dashboard](/docs/hacker-portal/frontend/staff/overview)

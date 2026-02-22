@@ -1,0 +1,17 @@
+---
+title: Database Overview
+sidebar_position: 0
+---
+
+# Database Overview
+
+HackPortal uses **MongoDB** with **Mongoose** as the ODM.
+
+- **Development** — MongoDB runs in a Docker container; connection string in `config/.env.dev` (e.g. `MONGODB_URI_LOCAL`).
+- **Production** — MongoDB Atlas or self-hosted; connection in `config/.env.prod` (`MONGODB_URI_PROD` or `MONGODB_URI_LOCAL` for containerized prod).
+
+Models cover users, applications, roles, permissions, sessions, and feature flags. Optional fields use defaults so schema evolution is backward-compatible.
+
+---
+
+**Related:** [Models and schema](/docs/hacker-portal/database/models-schema), [Backups and restore](/docs/hacker-portal/database/backups-restore)

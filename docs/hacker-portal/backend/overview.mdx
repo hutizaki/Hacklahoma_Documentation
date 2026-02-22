@@ -1,0 +1,16 @@
+---
+title: Backend Overview
+sidebar_position: 0
+---
+
+# Backend Overview
+
+**Stack:** Node.js, **Express**, **TypeScript**, **Mongoose**. Entry: `backend/src/index.ts`.
+
+**Layout:** `config/` (env, logger), `db/` (Mongo connection), `models/`, `routes/` (auth, users, admin, etc.), `middleware/` (auth, CSRF, rate limit, etc.), `utils/`, `scripts/`, `types/`.
+
+REST API; JSON; JWT in httpOnly cookies for auth; CSRF and CORS enforced.
+
+---
+
+**Related:** [API overview](/docs/hacker-portal/backend/api-overview), [Environment and config](/docs/hacker-portal/backend/environment-config)

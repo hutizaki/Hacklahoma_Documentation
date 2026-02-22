@@ -1,0 +1,19 @@
+---
+title: CLI Overview
+sidebar_position: 0
+---
+
+# CLI Overview
+
+The **HackPortal CLI** is an interactive terminal app for setup, deploy, and operations.
+
+- **Setup** — Prerequisites check, Quick Easy Setup, Initial Configuration (env generation).
+- **Deployment** — Deploy Environment (Development, Mock Production, Production); validates config, builds, starts containers, runs health checks.
+- **Database** — Backups (create, restore, restore into TEST_PROD), migrations, seed, roles.
+- **Status / Logs** — Show stack status and tail logs.
+
+Run from repo root: `pnpm -C cli start` (after `pnpm install` and `pnpm -C cli build`).
+
+---
+
+**Related:** [Setup flows](/docs/hacker-portal/cli/setup-flows), [Database menu](/docs/hacker-portal/cli/database-menu)

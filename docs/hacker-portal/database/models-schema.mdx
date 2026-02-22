@@ -1,0 +1,16 @@
+---
+title: Models and Schema
+sidebar_position: 1
+---
+
+# Models and Schema
+
+Core entities include **User** (profile, email, password hash, roles), **Application** (hacker application data), **Role**, **Permission**, **Session**, and **FeatureFlag**. Mongoose schemas define validation and indexes.
+
+Schema changes are additive where possible (optional fields with defaults). For breaking changes (e.g. `password` → `passwordHash`), a migration script runs after restore (see [Migrations](/docs/hacker-portal/database/migrations)).
+
+Full model details live in the hacker-portal repo: `docs/architecture/data-models.md`.
+
+---
+
+**Related:** [Database overview](/docs/hacker-portal/database/overview), [Migrations](/docs/hacker-portal/database/migrations)

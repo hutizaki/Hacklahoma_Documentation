@@ -1,0 +1,21 @@
+---
+title: Path to Production
+sidebar_position: 1
+---
+
+# Developer to Production (Overview)
+
+High-level path from your machine to a live site.
+
+1. **Install** — Clone, install Node/pnpm and Docker, run CLI Quick Easy Setup, deploy Development.
+2. **Develop** — Edit code in `frontend/src` and `backend/src`; hot reload applies changes.
+3. **Submit** — Commit, push, open a merge request to `main`.
+4. **CI** — Pipeline runs: format → lint → build → unit tests → E2E → publish digest → deploy TEST_PROD (blue-green).
+5. **Merge** — Merge to `main`; pipeline runs again and updates TEST_PROD.
+6. **Live production** — On the production server: pull `main`, rebuild images, restart the compose stack (or use CLI Deploy Production).
+
+The **testing stack** (TEST_PROD) is updated by CI. The **live production site** (e.g. register.hacklahoma.org) is updated manually or via your deploy process on the server.
+
+---
+
+**Related:** [Deployment and CI](/docs/hacker-portal/deployment-ci/ci-pipeline), [Production server](/docs/hacker-portal/deployment-ci/production-server)

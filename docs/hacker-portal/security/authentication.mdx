@@ -1,0 +1,22 @@
+---
+title: Authentication
+sidebar_position: 1
+---
+
+# Authentication
+
+HackPortal uses **JWT in httpOnly cookies** for sessions.
+
+## Flow
+
+1. **Register** — `POST /api/auth/register`; password hashed with bcrypt; user created (no token yet).
+2. **Login** — `POST /api/auth/login`; credentials checked; JWT issued and set in an httpOnly cookie; session stored.
+3. **Authenticated requests** — Cookie sent automatically; middleware validates JWT and attaches `req.user`.
+4. **Logout** — `POST /api/auth/logout`; cookie cleared and session invalidated.
+5. **Session check** — `GET /api/auth/me` returns the current user when the cookie is valid.
+
+Cookies use `secure` in production and `sameSite` (e.g. `lax` for localhost, `strict` for production) so browsers send them only to the correct origin.
+
+---
+
+**Related:** [Authorization](/docs/hacker-portal/security/authorization), [CSRF and CORS](/docs/hacker-portal/security/csrf-cors)
